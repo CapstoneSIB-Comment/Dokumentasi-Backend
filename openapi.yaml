@@ -1,0 +1,51 @@
+openapi: 3.0.3
+info:
+  title: Dokumen API Web Comment Community Environment Package
+  description: Dokumentasi API function
+  termsOfService: 
+  contact:
+    email: zzz@gmail.com
+  license:
+    name: Comment Community Environment Package
+    url:  
+  version: 1.0.11
+externalDocs:
+  description: Repositori Backend Comment        
+  url: https://github.com/CapstoneSIB-Comment/Backend
+tags:
+  - name: Authorization
+    description: Signup Akun dan Authorization
+    externalDocs:
+      description: Deskripsi dan Kode Program
+      url: 
+  - name: Users
+    description: Update Get Delete User
+    externalDocs:
+      description: Deskripsi dan Kode Program
+      url: 
+  - name: Event
+    description: Create Read Get Update Event 
+    externalDocs:
+      description: Deskripsi dan Kode Program
+      url: 
+  - name: Certificates
+    description: Create Read Get Update Certificates 
+    externalDocs:
+      description: Deskripsi dan Kode Program
+      url: 
+  - name: Documentation
+    description: Create Read Get Update Certificates 
+    externalDocs:
+      description: Deskripsi dan Kode Program
+      url: 
+
+paths:
+  # ------------------------- Authorization
+  # ------------------------- Users
+  # ------------------------- Event
+  # ------------------------- Certificates
+  # ------------------------- Documentation
+ 
+ 
+
+  
