@@ -3,49 +3,434 @@ info:
   title: Dokumen API Web Comment Community Environment Package
   description: Dokumentasi API function
   termsOfService: 
-  contact:
-    email: zzz@gmail.com
   license:
     name: Comment Community Environment Package
     url:  
   version: 1.0.11
+servers:
+  - url: http://localhost:5000
 externalDocs:
   description: Repositori Backend Comment        
   url: https://github.com/CapstoneSIB-Comment/Backend
 tags:
-  - name: Authorization
+  - name: Authentication & Authorization
     description: Signup Akun dan Authorization
     externalDocs:
       description: Deskripsi dan Kode Program
       url: 
-  - name: Users
+  - name: users
     description: Update Get Delete User
     externalDocs:
       description: Deskripsi dan Kode Program
       url: 
-  - name: Event
-    description: Create Read Get Update Event 
+  - name: Post Event & News
+    description: Create Read Get Update Post Event & News 
     externalDocs:
       description: Deskripsi dan Kode Program
       url: 
-  - name: Certificates
-    description: Create Read Get Update Certificates 
+  - name: Joint Event
+    description: Create Read Get Update Joint Event 
     externalDocs:
       description: Deskripsi dan Kode Program
       url: 
-  - name: Documentation
-    description: Create Read Get Update Certificates 
+  - name: Comments
+    description: Create Read Get Update Joint Event 
     externalDocs:
       description: Deskripsi dan Kode Program
       url: 
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: budi
+        email: budi@gmail.com
+        password: 123456
+
+    users:
+      type: object
+      properties:
+        photo:
+          type: string
+        name:
+          type: string
+        headTitle:
+          type: string
+        phone:
+          type: string
+      example:
+        photo: satria.jpg
+        name: Satria
+        headTitle: Front End Developer
+        phone: 081221224553
+
+    Event:
+      type: object
+      properties:
+        ownerId:
+          type: string
+        title:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        maxParticipants:
+          type: integer
+        image:
+          type: string
+      example:
+        ownerId: a0cedcfe-f096-4e07-af14-6e5b41594bbf
+        title: Event 1
+        category: Event
+        description: Lorem ipsum dolor sit amet
+        startDate: 2024-06-20T00:00:00.000Z
+        endDate: 2024-06-25T00:00:00.000Z
+        maxParticipants: 20
+        image: https://i.pravatar.cc/300
+
+    Comment:
+      type: object
+      properties:
+        eventId:
+          type: string
+        content:
+          type: string
+        usersId:
+          type: string
+      example:
+        eventId: d518a867-6e93-4585-b180-4fd81ac86212
+        content: Ini adalah komentar baru
+        usersId: caa7f9a3-74a4-4e9f-a78b-0a4528f0763c
+
+  securitySchemes:
+    token:
+      type: apiKey
+      name: token
+      in: header
+
+security:
+  - token: []
 
 paths:
-  # ------------------------- Authorization
-  # ------------------------- Users
-  # ------------------------- Event
-  # ------------------------- Certificates
-  # ------------------------- Documentation
- 
- 
+# ------------------------- Authentication & Authorization
+  /api/auth/register:
+    post:
+      tags:
+        - Authentication & Authorization
+      summary: Register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Successful registration
 
-  
+  /api/auth/login:
+    post:
+      tags:
+        - Authentication & Authorization
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Successful login
+
+  /api/protected:
+    get:
+      tags:
+        - Authentication & Authorization
+      summary: Protected route
+      security:
+        - token: []
+      responses:
+        '200':
+          description: Access granted
+
+# ------------------------- users
+  /api/users:
+    get:
+      tags:
+        - users
+      summary: Get users
+      security:
+        - token: []
+      responses:
+        '200':
+          description: Successful retrieval of users
+
+    post:
+      tags:
+        - users
+      summary: Update users
+      security:
+        - token: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/users'
+      responses:
+        '200':
+          description: users updated successfully
+
+  /api/users/{id}:
+    delete:
+      tags:
+        - users
+      summary: Delete users By ID
+      security:
+        - token: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: users deleted successfully
+
+  /api/auth/password:
+    put:
+      tags:
+        - users
+      summary: Change Password
+      security:
+        - token: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                oldPassword:
+                  type: string
+                newPassword:
+                  type: string
+      responses:
+        '200':
+          description: Password changed successfully
+
+  /api/users/me:
+    get:
+      tags:
+        - users
+      summary: Get users By Token
+      security:
+        - token: []
+      responses:
+        '200':
+          description: users retrieved successfully
+
+# ------------------------- Post Event & News
+  /api/posts:
+    post:
+      tags:
+        - Post Event & News
+      summary: Post Event
+      security:
+        - token: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '200':
+          description: Event posted successfully
+
+    get:
+      tags:
+        - Post Event & News
+      summary: Get All Event
+      responses:
+        '200':
+          description: List of posts retrieved successfully
+
+  /api/posts/{id}:
+    get:
+      tags:
+        - Post Event & News
+      summary: Get Event By Id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Event retrieved successfully
+
+    put:
+      tags:
+        - Post Event & News
+      summary: Edit posts
+      security:
+        - token: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Event edited successfully
+
+    delete:
+      tags:
+        - Post Event & News
+      summary: Delete Event
+      security:
+        - token: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Event deleted successfully
+
+  /api/posts/trends:
+    get:
+      tags:
+        - Post Event & News
+      summary: Get post by trends
+      responses:
+        '200':
+          description: Trending posts retrieved successfully
+
+# ------------------------- Joint Event
+  /api/user-join-event:
+    post:
+      tags:
+        - Joint Event
+      summary: Join Event
+      security:
+        - token: []
+      responses:
+        '200':
+          description: User joined event successfully
+
+    get:
+      tags:
+        - Joint Event
+      summary: Get All User Join posts
+      security:
+        - token: []
+      responses:
+        '200':
+          description: List of users joined posts retrieved successfully
+
+  /api/user-join-event/{id}:
+    get:
+      tags:
+        - Joint Event
+      summary: Get User Join By Id
+      security:
+        - token: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User joined event retrieved successfully
+
+  /api/join/leave:
+    post:
+      tags:
+        - Joint Event
+      summary: Leave Event
+      security:
+        - token: []
+      responses:
+        '200':
+          description: User left event successfully
+
+# ------------------------- Comments
+  /api/comments:
+    post:
+      tags:
+        - Comments
+      summary: Post Comments
+      security:
+        - token: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        '200':
+          description: Comment posted successfully
+
+  /api/comments/{id}:
+    put:
+      tags:
+        - Comments
+      summary: Update Comment
+      security:
+        - token: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        '200':
+          description: Comment updated successfully
+
+    delete:
+      tags:
+        - Comments
+      summary: Delete Comment
+      security:
+        - token: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Comment deleted successfully
