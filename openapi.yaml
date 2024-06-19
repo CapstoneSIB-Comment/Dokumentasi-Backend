@@ -8,7 +8,7 @@ info:
     url:  
   version: 1.0.11
 servers:
-  - url: http://localhost:5000
+  - url: https://comment.yourcodeapp.com
 externalDocs:
   description: Repositori Backend Comment        
   url: https://github.com/CapstoneSIB-Comment/Backend
