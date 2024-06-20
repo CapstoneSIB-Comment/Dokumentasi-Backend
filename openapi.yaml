@@ -52,7 +52,7 @@ components:
       example:
         username: budi
         email: budi@gmail.com
-        password: 123456
+        password: "123456"
     Userlogin:
       type: object
       properties:
@@ -62,7 +62,7 @@ components:
           type: string
       example:
         email: budi@gmail.com
-        password: 123456
+        password: "123456"
     users:
       type: object
       properties:
