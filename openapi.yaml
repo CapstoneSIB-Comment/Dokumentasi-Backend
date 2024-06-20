@@ -43,17 +43,26 @@ components:
     User:
       type: object
       properties:
-        name:
+        username:
           type: string
         email:
           type: string
         password:
           type: string
       example:
-        name: budi
+        username: budi
         email: budi@gmail.com
         password: 123456
-
+    Userlogin:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: budi@gmail.com
+        password: 123456
     users:
       type: object
       properties:
@@ -152,7 +161,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/Userlogin'
       responses:
         '200':
           description: Successful login
