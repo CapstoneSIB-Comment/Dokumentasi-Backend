@@ -207,6 +207,15 @@ paths:
       responses:
         '200':
           description: users updated successfully
+    delete:
+      tags:
+        - users
+      summary: Delete users By ID
+      security:
+        - token: []
+      responses:
+        '200':
+          description: users deleted successfully
   /api/users/password:
     put:
       tags:
@@ -228,23 +237,6 @@ paths:
       responses:
         '200':
           description: Password changed successfully
-
-  /api/users/{id}:
-    delete:
-      tags:
-        - users
-      summary: Delete users By ID
-      security:
-        - token: []
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: users deleted successfully
 
     
 
@@ -321,7 +313,7 @@ paths:
       responses:
         '200':
           description: Event edited successfully
-
+  
     delete:
       tags:
         - Post Event & News
