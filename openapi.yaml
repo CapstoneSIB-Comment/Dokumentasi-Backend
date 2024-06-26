@@ -78,7 +78,7 @@ components:
         photo: satria.jpg
         name: Satria
         headTitle: Front End Developer
-        phone: 081221224553
+        phone: "081221224553"
 
     Event:
       type: object
@@ -110,6 +110,11 @@ components:
         endDate: 2024-06-25T00:00:00.000Z
         maxParticipants: 20
         image: https://i.pravatar.cc/300
+    Eventupdate:
+      type: object
+      properties:
+        description:
+          type: string
 
     Comment:
       type: object
@@ -189,7 +194,7 @@ paths:
         '200':
           description: Successful retrieval of users
 
-    post:
+    put:
       tags:
         - users
       summary: Update users
@@ -308,6 +313,12 @@ paths:
           required: true
           schema:
             type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Eventupdate'
       responses:
         '200':
           description: Event edited successfully
