@@ -126,9 +126,7 @@ components:
         usersId:
           type: string
       example:
-        eventId: d518a867-6e93-4585-b180-4fd81ac86212
         content: Ini adalah komentar baru
-        usersId: caa7f9a3-74a4-4e9f-a78b-0a4528f0763c
 
   securitySchemes:
     token:
@@ -209,25 +207,7 @@ paths:
       responses:
         '200':
           description: users updated successfully
-
-  /api/users/{id}:
-    delete:
-      tags:
-        - users
-      summary: Delete users By ID
-      security:
-        - token: []
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: users deleted successfully
-
-  /api/auth/password:
+  /api/users/password:
     put:
       tags:
         - users
@@ -248,6 +228,25 @@ paths:
       responses:
         '200':
           description: Password changed successfully
+
+  /api/users/{id}:
+    delete:
+      tags:
+        - users
+      summary: Delete users By ID
+      security:
+        - token: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: users deleted successfully
+
+    
 
   /api/users/me:
     get:
@@ -349,17 +348,23 @@ paths:
           description: Trending posts retrieved successfully
 
 # ------------------------- Joint Event
-  /api/user-join-event:
+  /api/events/{id}/join:
     post:
       tags:
         - Joint Event
       summary: Join Event
       security:
         - token: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: User joined event successfully
-
+  /api/events:
     get:
       tags:
         - Joint Event
@@ -370,7 +375,7 @@ paths:
         '200':
           description: List of users joined posts retrieved successfully
 
-  /api/user-join-event/{id}:
+  /api/events/{id}:
     get:
       tags:
         - Joint Event
@@ -387,25 +392,37 @@ paths:
         '200':
           description: User joined event retrieved successfully
 
-  /api/join/leave:
-    post:
+  /api/events/{id}/leave:
+    delete:
       tags:
         - Joint Event
       summary: Leave Event
       security:
         - token: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: User left event successfully
 
 # ------------------------- Comments
-  /api/comments:
+  /api/posts/{id}/comments/:
     post:
       tags:
         - Comments
       summary: Post Comments
       security:
         - token: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -415,8 +432,7 @@ paths:
       responses:
         '200':
           description: Comment posted successfully
-
-  /api/comments/{id}:
+  /api/posts/{id}/comments/{id}:
     put:
       tags:
         - Comments
